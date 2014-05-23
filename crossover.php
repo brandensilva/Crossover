@@ -4,17 +4,16 @@ Plugin Name: Crossover Widget
 Plugin URI: http://www.brandensilva.com
 Description: Display a players Dribbble shots.
 Version: 0.9.0
-Author: Branden Silva, Tyler Gaw
+Author: Branden Silva
 Author URI: http://www.brandensilva.com
-Licence: GNU GPL Version 3
+Licence: MIT
 */
 
-// Load Necessary Scripts.
 function crossover_scripts() {
 	if( !is_admin() ) {
 
 		wp_enqueue_script('jquery');
-		wp_enqueue_script('jribbble', plugins_url( '/js/jribbble-1.0.1.min.js' , __FILE__ ), array( 'jquery' ));
+		wp_enqueue_script('jribbble', plugins_url( '/jribbble/jribbble-1.0.1.min.js' , __FILE__ ), array( 'jquery' ));
 	}
 }
 
@@ -53,9 +52,6 @@ class Crossover_Widget extends WP_Widget {
 		echo $args['before_widget'];
 		if ( !empty( $player ) )
 
-		//widget code goes here
-
-		// Break size into array to target width & height
 ?>
 		<div class="crossover"></div>
 		<script>
@@ -91,7 +87,7 @@ class Crossover_Widget extends WP_Widget {
 			$player = $instance[ 'player' ];
 		}
 		else {
-			$player = __( 'brandensilva', 'text_domain' );
+			$player = __( 'simplebits', 'text_domain' );
 		}
 
 		if ( isset( $instance[ 'size' ] ) ) {
@@ -145,16 +141,16 @@ class Crossover_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 
-		$instance[ 'player' ] 		= ( ! empty( $new_instance[ 'player' ] ) ) 	? strip_tags( $new_instance[ 'player' ] ) : 'brandensilva';
-		$instance[ 'size' ] 			= ( ! empty( $new_instance[ 'size' ] ) )	? strip_tags( $new_instance[ 'size' ] ) : '200x150';
+		$instance[ 'player' ] 		= ( ! empty( $new_instance[ 'player' ] ) ) 	? strip_tags( $new_instance[ 'player' ] ) : 'simplebits';
+		$instance[ 'size' ] 			= ( ! empty( $new_instance[ 'size' ] ) )	? strip_tags( $new_instance[ 'size' ] ) : '400x300';
 		$instance[ 'shot_count' ] = ( ! empty( $new_instance[ 'shot_count' ] ) && ( is_numeric( $new_instance[ 'shot_count' ]) ) ) ? floor(strip_tags( $new_instance[ 'shot_count' ] )) : '1';
 
 		return $instance;
 	}
 
-} // class Crossover_Widget
+} // Class Crossover_Widget
 
-// register Crossover_Widget
+// Register Crossover_Widget
 function register_crossover_widget() {
     register_widget( 'Crossover_Widget' );
 }
